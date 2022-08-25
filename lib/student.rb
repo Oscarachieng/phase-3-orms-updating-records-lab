@@ -7,7 +7,7 @@ class Student
   #initialize method
   attr_accessor :name, :grade
   attr_reader :id
-  
+
   def initialize (name, grade, id = nil)
     @id = id
     @name = name
@@ -50,6 +50,12 @@ end
 # .new_from_db
 def self.new_from_db (data_from_db)
   self.new(id: data_from_db[0], name:data_from_db[1],grade:data_from_db[2])
+end
+
+#self.find_by_name
+def self.find_by_name (name)
+  my_student_by_name = DB[:conn].execute("SELECT * FROM students WHERE name IS ?;", name)
+  Student.new(my_student_by_name[0],my_student_by_name[1], my_student_by_name[2])
 end
 
 # update method
